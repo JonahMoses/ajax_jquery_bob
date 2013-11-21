@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <script src="jquery-2.0.3.js"></script>
+  </head>
+  <body>
+    <h1>Fireside Chat with Bob</h1>
+
+    <form action="/ask" method="POST">
+      <input type="text" name="chat" id="bob-input"></input>
+      <input type="submit" id="bob-button-input" name="Say" value="Say"></input>
+    </form>
+
+    <div id="bob-responses">
+      Bob would say stuff here if he was nice to us.
+    </div>
+
+    <script>
+      $("#bob-button-input").click(function(eventObj) {
+        eventObj.preventDefault();
+
+        var thingGoingToAskBob = $("#bob-input").val();
+
+        $.ajax("/ask",{
+          type : "POST",
+          data : { "chat" : thingGoingToAskBob },
+          success : function(data,textStatus,jqXHR) {
+            $("#bob-responses").html(data);
+          }
+        });
+
+      });
+    </script>
+
+  </body>
+</html>
